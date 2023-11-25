@@ -13,7 +13,10 @@ export class CreatePitaraComponent implements OnInit {
   targetItems = [];
   pitaraName = '';
   showModal = false
+  showQr = false
+
   contents;
+  information: any;
 
   constructor(public utils: UtilService, public router: Router, private localStorageService: LocalStorageService) { }
 
@@ -42,7 +45,7 @@ export class CreatePitaraComponent implements OnInit {
     {
       name: this.pitaraName,
       identifier: fiveDigitNumber,
-      myPitara:true,
+      myPitara: true,
       children: [
         ...this.targetItems
       ]
@@ -54,11 +57,13 @@ export class CreatePitaraComponent implements OnInit {
     console.log(newPitara)
   }
 
-  moveToTarget(item: string) {
+  moveToTarget(item) {
     const sourceIndex = this.data.indexOf(item);
     const targetIndex = this.targetItems.indexOf(item);
-
-    if (sourceIndex !== -1) {
+    if (sourceIndex == -1 && targetIndex == -1) {
+      this.targetItems.push(item);
+      this.showQr=!this.showQr
+    } else if (sourceIndex !== -1) {
       // Move from source to target
       this.data.splice(sourceIndex, 1);
       this.targetItems.push(item);
@@ -68,12 +73,26 @@ export class CreatePitaraComponent implements OnInit {
       this.data.push(item);
     }
   }
-  
+
   clearAll() {
     this.data = JSON.parse(this.localStorageService.getItem('contents'));
     this.targetItems = []
   }
-  scanQr(){
-    this.router.navigate(['qr'])
+  scanQr() {
+    this.showQr = !this.showQr
+  }
+
+  public scanSuccessHandler($event: any) {
+    this.information = $event;
+    var sUnique = (performance.now() + '').replace('.', '');
+    var fiveDigitNumber = parseInt(sUnique.slice(0, 5), 10);
+    const newQrContent =
+    {
+      name: 'QR Item',
+      identifier: fiveDigitNumber,
+      artifactUrl: this.information,
+      urlType:'Embed'
+    }
+this.moveToTarget(newQrContent)
   }
 }
