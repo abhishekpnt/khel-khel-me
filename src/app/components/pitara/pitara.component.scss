@@ -5,10 +5,9 @@
 // padding-bottom:2rem;
 // }
 
-
 /* box */
-$body--Background: #F0F1F1;
-$icon-rocket--Color: #4F5D75;
+$body--Background: #f0f1f1;
+$icon-rocket--Color: #4f5d75;
 
 .box-wrapper {
   perspective: 50rem;
@@ -45,21 +44,42 @@ $icon-rocket--Color: #4F5D75;
 .box-face--is-back {
   transform: translateZ(-6.25rem) rotateY(180deg);
   background-color: #ddd;
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-image: linear-gradient(
+    to right top,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72,
+    #a8eb12
+  );
 }
 
 .box-face--is-right {
   transform: rotateY(-270deg) translateX(6.25rem);
   transform-origin: top right;
   background-color: #ddd;
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-image: linear-gradient(
+    to right top,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72,
+    #a8eb12
+  );
 }
 
 .box-face--is-left {
   transform: rotateY(270deg) translateX(-6.25rem);
   transform-origin: center left;
   background-color: #ddd;
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-image: linear-gradient(
+    to right top,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72,
+    #a8eb12
+  );
 }
 
 .box-face--is-top {
@@ -77,9 +97,15 @@ $icon-rocket--Color: #4F5D75;
 .box-face--is-front {
   transform: translateZ(3.125rem);
   background-color: #eee;
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-image: linear-gradient(
+    to right top,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72,
+    #a8eb12
+  );
 }
-
 
 @keyframes spin {
   from {
@@ -95,7 +121,6 @@ $icon-rocket--Color: #4F5D75;
 .shadow {
   animation: spin 15s infinite linear;
 }
-
 
 .shadow-wrapper {
   perspective: 50rem;
@@ -120,7 +145,6 @@ $icon-rocket--Color: #4F5D75;
   transform: rotateX(90deg) translateY(3.125rem);
   transform-origin: bottom center;
 }
-
 
 .pitara-box-item {
   position: relative;
@@ -195,7 +219,7 @@ p {
   color: #fff;
 }
 
-// @media only screen and (max-width: 768px) { 
+// @media only screen and (max-width: 768px) {
 //   .btn-fix {
 //     width: 90%;
 //     bottom: 88px;
@@ -220,3 +244,49 @@ p {
     border-color: #fff;
   }
 }
+
+.new-pitara-container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  overflow: auto;
+
+  .new-pitara-cards-section {
+    min-width: 320px;
+  }
+
+  .new-pitara-info {
+    color: #fff;
+    margin-bottom: 16px;
+    .name {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .new-pitara-card-container {
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .new-pitara-card {
+    margin-bottom: 16px;
+
+    .description {
+      font-size: 14px;
+    }
+
+    ::ng-deep {
+      .mat-card-title {
+        font-size: 18px;
+      }
+      .mat-card-subtitle {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
