@@ -246,13 +246,13 @@ p {
 }
 
 .new-pitara-container {
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  overflow: auto;
+  // display: flex;
+  // gap: 24px;
+  // align-items: flex-start;
+  // overflow: auto;
 
   .new-pitara-cards-section {
-    min-width: 320px;
+    // min-width: 320px;
   }
 
   .new-pitara-info {
@@ -268,12 +268,16 @@ p {
   }
 
   .new-pitara-card-container {
-    max-height: 70vh;
+    // max-height: 70vh;
     overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .new-pitara-card {
-    margin-bottom: 16px;
+    margin: 0 16px 16px 0;
+    min-width: 320px;
 
     .description {
       font-size: 14px;
