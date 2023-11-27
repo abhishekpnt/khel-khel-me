@@ -14,7 +14,7 @@ export class CreatePitaraComponent implements OnInit {
   pitaraName = '';
   showModal = false
   showQr = false
-
+  fiveDigitNumber
   contents;
   information: any;
 
@@ -62,7 +62,7 @@ export class CreatePitaraComponent implements OnInit {
     const targetIndex = this.targetItems.indexOf(item);
     if (sourceIndex == -1 && targetIndex == -1) {
       this.targetItems.push(item);
-      this.showQr=!this.showQr
+      this.showQr = !this.showQr
     } else if (sourceIndex !== -1) {
       // Move from source to target
       this.data.splice(sourceIndex, 1);
@@ -85,14 +85,41 @@ export class CreatePitaraComponent implements OnInit {
   public scanSuccessHandler($event: any) {
     this.information = $event;
     var sUnique = (performance.now() + '').replace('.', '');
-    var fiveDigitNumber = parseInt(sUnique.slice(0, 5), 10);
-    const newQrContent =
-    {
-      name: 'QR Item',
-      identifier: fiveDigitNumber,
-      artifactUrl: this.information,
-      urlType:'Embed'
+    this.fiveDigitNumber = parseInt(sUnique.slice(0, 5), 10);
+    if (this.getVideoIdFromUrl(this.information)) {
+      this.getVideoDetails(this.getVideoIdFromUrl(this.information))
+    } else {
+      const newQrContent =
+      {
+        name: 'QR Item',
+        identifier: this.fiveDigitNumber,
+        artifactUrl: this.information,
+        urlType: 'Page'
+      }
+      this.moveToTarget(newQrContent)
     }
-this.moveToTarget(newQrContent)
+  }
+
+  getVideoIdFromUrl(url) {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+    return match ? match[1] : null;
+  }
+
+  getVideoDetails(videoId) {
+    const apiUrl = `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`;
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const newQrContent =
+        {
+          name: data.title,
+          author: data.author_name,
+          identifier: this.fiveDigitNumber,
+          artifactUrl: this.information,
+          urlType: 'Embed'
+        }
+        this.moveToTarget(newQrContent)
+      })
+      .catch(error => console.error('Error fetching video details:', error));
   }
 }
