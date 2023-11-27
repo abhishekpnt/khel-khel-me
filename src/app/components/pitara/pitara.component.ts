@@ -57,8 +57,8 @@ export class PitaraComponent implements OnInit {
     const hammer = new Hammer.Manager(this.tabGroup._elementRef.nativeElement);
     const pan = new Hammer.Pan({ direction: Hammer.DIRECTION_HORIZONTAL });
     hammer.add(pan);
-    hammer.on('panright', (event) => this.handleSwipe(event, 'right'));
-    hammer.on('panleft', (event) => this.handleSwipe(event, 'left'));
+    // hammer.on('panright', (event) => this.handleSwipe(event, 'right'));
+    // hammer.on('panleft', (event) => this.handleSwipe(event, 'left'));
   }
 
   handleSwipe(event, direction?: 'left' | 'right'): void {
