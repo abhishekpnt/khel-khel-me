@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd,NavigationExtras, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/localStorage.service';
 import { UtilService } from 'src/app/services/utils.service';
 import { Howl } from 'howler';
@@ -157,6 +157,15 @@ export class PitaraComponent implements OnInit {
       }
       this.data = this.saasArray
     }
+  }
+  scanQr() {
+    const dataToSend = { state:'pitara-page' };
+    
+    const navigationExtras: NavigationExtras = {
+      queryParams:dataToSend
+    };
+    
+    this.router.navigate(['qr'], navigationExtras);
   }
 }
 

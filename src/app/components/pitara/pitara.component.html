@@ -1,6 +1,11 @@
-<button mat-raised-button class="btn-new btn-fix" [routerLink]="['/create-pitara']">
-  {{'createYourPitara'|translate}}
-</button>
+<div class="button-container">
+  <button mat-raised-button class="btn-new btn-fixx" (click)="scanQr()">
+   Scan QR <mat-icon>qr_code_scanner</mat-icon>
+  </button>
+  <button mat-raised-button class="btn-new btn-fixx" [routerLink]="['/create-pitara']">
+    {{ 'createYourPitara' | translate }}
+  </button>
+</div>
 
 <mat-tab-group #tabGroup mat-align-tabs="center" class="pitara-tab mt-1" [selectedIndex]="selectedTabIndex"
 (selectedTabChange)="handlePitaraSelection($event)">
