@@ -6,7 +6,7 @@
   <ng-container>
     <div class="new-pitara-cards-section">
       <div >
-        <div class="new-pitara-info text-center">
+        <div class="new-pitara-info">
           <h4 class="name">Recently viewed</h4>
         </div>
         <div class="new-pitara-card-container" >
@@ -35,13 +35,13 @@
       <ng-template mat-tab-label>
         <span>{{tab.value|translate}}</span>
       </ng-template>
-      <div class="row" style="padding: 16px 24px;">
+      <div class="row">
         <div class="new-pitara-container">
           <ng-container>
   
             <div class="new-pitara-cards-section" *ngFor="let pitara of data;let i=index" (click)="unboxPitara(pitara)">
               <div (click)="unboxPitara(pitara)">
-                <div class="new-pitara-info text-center">
+                <div class="new-pitara-info">
                   <h4 class="name">{{pitara.name}}</h4>
                   <p>{{pitara.description}}</p>
                   <p>{{'craftedBy'|translate}}: {{pitara.publisher?pitara.publisher:'Ekstep Foundation'}}</p>

@@ -206,7 +206,7 @@ p {
 }
 .btn-fix {
   position: fixed;
-  right: 4px;
+  right: 8px;
   top: 8px;
   z-index: 2;
   @media only screen and (max-width: 768px) {
@@ -231,17 +231,28 @@ p {
 // }
 
 ::ng-deep {
+  .pitara-tab .mat-tab-header {
+    background: #f8e9d3;
+    margin: 0 16px;
+    border-radius: 8px;
+  }
+
   .pitara-tab .mat-tab-label {
     font-size: 16px;
-    color: #fff;
+    color: black;
   }
 
   .pitara-tab.mat-tab-group.mat-primary .mat-ink-bar {
-    background-color: #fff;
+    background-color: #D4AA70;
+    height: 6px;
   }
 
   .pitara-tab .mat-tab-header-pagination-chevron {
-    border-color: #fff;
+    border-color: black;
+  }
+
+  .mat-toolbar {
+    padding-left: 0;
   }
 }
 
@@ -260,6 +271,8 @@ p {
     margin-bottom: 16px;
     .name {
       font-size: 20px;
+      text-decoration: underline;
+      color: #f2d296;
     }
 
     p {
@@ -275,9 +288,14 @@ p {
     justify-content: flex-start;
   }
 
+  .new-pitara-cards-section {
+    padding: 24px 0 32px 24px;
+  }
+
   .new-pitara-card {
-    margin: 0 16px 16px 0;
+    margin: 0 16px 0 0;
     min-width: 320px;
+    background-color: #f8e9d3;
 
     .description {
       font-size: 14px;
