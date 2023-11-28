@@ -2,9 +2,8 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Outpu
 import { playerConfig } from './playerConfig';
 import * as _ from 'lodash-es';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import * as $ from "jquery";
 import { UtilService } from 'src/app/services/utils.service';
-
+import { LocalStorageService } from 'src/app/services/localStorage.service';
 
 @Component({
   selector: 'lib-player',
@@ -26,6 +25,8 @@ export class PlayerComponent implements OnInit {
 
   @Output() closePlayerscreen = new EventEmitter();
   @HostListener('window:orientationchange', ['$event'])
+  existingRecents = JSON.parse(this.localStorageService.getItem('recents')) || [];
+
   public handleOrientationChange() {
     const screenType = _.get(screen, 'orientation.type');
     if (screenType === 'portrait-primary' || screenType === 'portrait-secondary') {
@@ -35,7 +36,7 @@ export class PlayerComponent implements OnInit {
       }
     }
   }
-  constructor(private deviceDetectorService: DeviceDetectorService, public utils: UtilService) { }
+  constructor(private deviceDetectorService: DeviceDetectorService, public utils: UtilService, private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.isMobileOrTab = this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet();
@@ -43,6 +44,22 @@ export class PlayerComponent implements OnInit {
 
     console.log('device is ', this.isMobileOrTab)
     this.setContentData();
+
+    //Setting data for recents section
+    this.existingRecents.unshift(this.playerData);
+    const uniqueIds = new Set();
+
+    // Use filter to create an array of unique objects based on id
+    const uniqueArray = this.existingRecents.filter(obj => {
+      if (!uniqueIds.has(obj.identifier)) {
+        uniqueIds.add(obj.identifier);
+        return true;
+      }
+      return false;
+    });
+
+
+    this.localStorageService.setItem('recents', JSON.stringify(uniqueArray));
   }
 
   ngAfterViewInit() {
@@ -122,24 +139,22 @@ export class PlayerComponent implements OnInit {
 
   getEmbedUrl(url) {
     // Extract video ID from the URL
-    if (url.match(/[?&]v=([^?&]+)/)) {
-      var videoId = url.match(/[?&]v=([^?&]+)/)[1];
+    if ( url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)
+    ) {
+      var videoId = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)[1];
       // Construct the embed URL
       var embedUrl = "https://www.youtube.com/embed/" + videoId + '?enablejsapi=1';
       return embedUrl;
-    }else if(url.match(/^https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)$/)) {
-      var videoId = url.split("/").pop();
-      var embedUrl = "https://www.youtube.com/embed/" + videoId + '?enablejsapi=1';
-      return embedUrl;
-    }else if(url.match(/storyweaver\.org/)) {
+    } 
+    else if (url.match(/storyweaver\.org/)) {
       const regex = /\/stories\/(.+)/;
       const match = url.match(regex);
       if (match && match[1]) {
         var embedUrl = "https://storyweaver.org.in/stories/show-in-iframe/" + match[1] + '?iframe=true';
         return embedUrl;
-      } 
+      }
     }
-  else return url;
+    else return url;
   }
 
   /** when user clicks on close button

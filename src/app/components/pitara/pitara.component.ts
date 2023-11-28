@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/localStorage.service';
 import { UtilService } from 'src/app/services/utils.service';
 import { Howl } from 'howler';
@@ -28,17 +28,20 @@ export class PitaraComponent implements OnInit {
   data;
   storedTabIndex;
   pitaraDataMap: { [id: string]: any } = {};
+  isPlayerInit: boolean = false;
+  isContentInit: boolean = true;
 
   allChips: Chip[] = [
     { value: 'Saas Pitaras', key: 'saaspitara' },
     { value: 'Pitaras from open network', key: 'onestpitara' },
     { value: 'My Pitaras', key: 'mypitara' },
   ];
-
+  value: any;
+  recents=[]
   constructor(public router: Router, public utils: UtilService, private localStorageService: LocalStorageService) { }
 
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
-
+  
   ngOnInit() {
     this.utils.updateHeaderClass('pitara');
     this.saaspitara = JSON.parse(this.localStorageService.getItem('saaspitara'));
@@ -50,6 +53,7 @@ export class PitaraComponent implements OnInit {
       src: ['assets/audio/windchime.mp3'],
     });
     this.handlePitaraSelection();
+    this.recents = JSON.parse(this.localStorageService.getItem('recents'))||[];
 
   }
 
@@ -72,7 +76,7 @@ export class PitaraComponent implements OnInit {
 
   unboxPitara(value) {
     console.log('val', value)
-    this.utils.setTitle(value.name);
+    // this.utils.setTitle(value.name);
     if (!value.provider_id) {
       if (!value.myPitara)
       {  this.utils.saasCollectionRead(value.identifier).subscribe((data) => {
@@ -169,10 +173,23 @@ export class PitaraComponent implements OnInit {
         this.saasArray = this.mypitara;
       }
       this.data = this.saasArray
+      if(this.data!==null && this.data.length>0)
       this.data.forEach(pitara => this.unboxPitara(pitara));
-
       console.log('map',this.pitaraDataMap)
     }
+  }
+
+  openPlayer(content: any) {
+    this.value = content;
+    console.log(this.value, 'test');
+    this.isPlayerInit = true;
+    this.isContentInit = false;
+  }
+
+  handleClose(data) {
+    this.isPlayerInit = false;
+    this.isContentInit = true;
+    this.ngOnInit();
   }
 }
 
