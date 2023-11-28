@@ -39,14 +39,14 @@
         <div class="new-pitara-container">
           <ng-container>
   
-            <div class="new-pitara-cards-section" *ngFor="let pitara of data;let i=index" (click)="unboxPitara(pitara)">
-              <div (click)="unboxPitara(pitara)">
+            <div class="new-pitara-cards-section" *ngFor="let pitara of data;let i=index">
+              <div>
                 <div class="new-pitara-info">
                   <h4 class="name">{{pitara.name}}</h4>
                   <p>{{pitara.description}}</p>
                   <p>{{'craftedBy'|translate}}: {{pitara.publisher?pitara.publisher:'Ekstep Foundation'}}</p>
                 </div>
-                <div class="new-pitara-card-container" *ngIf="pitaraDataMap[pitara.identifier]">
+                <div class="new-pitara-card-container">
                   <mat-card class="new-pitara-card" *ngFor="let content of pitaraDataMap[pitara.identifier];let i=index">
                     <span class="description">{{content.primaryCategory}}</span>
                     <mat-card-title-group (click)="openPlayer(content)">

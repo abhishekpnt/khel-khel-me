@@ -37,11 +37,11 @@ export class PitaraComponent implements OnInit {
     { value: 'My Pitaras', key: 'mypitara' },
   ];
   value: any;
-  recents=[]
+  recents = []
   constructor(public router: Router, public utils: UtilService, private localStorageService: LocalStorageService) { }
 
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
-  
+
   ngOnInit() {
     this.utils.updateHeaderClass('pitara');
     this.saaspitara = JSON.parse(this.localStorageService.getItem('saaspitara'));
@@ -53,14 +53,14 @@ export class PitaraComponent implements OnInit {
       src: ['assets/audio/windchime.mp3'],
     });
     this.handlePitaraSelection();
-    this.recents = JSON.parse(this.localStorageService.getItem('recents'))||[];
+    this.recents = JSON.parse(this.localStorageService.getItem('recents')) || [];
 
   }
 
   ngAfterViewInit() {
-    const hammer = new Hammer.Manager(this.tabGroup._elementRef.nativeElement);
-    const pan = new Hammer.Pan({ direction: Hammer.DIRECTION_HORIZONTAL });
-    hammer.add(pan);
+    // const hammer = new Hammer.Manager(this.tabGroup._elementRef.nativeElement);
+    // const pan = new Hammer.Pan({ direction: Hammer.DIRECTION_HORIZONTAL });
+    // hammer.add(pan);
     // hammer.on('panright', (event) => this.handleSwipe(event, 'right'));
     // hammer.on('panleft', (event) => this.handleSwipe(event, 'left'));
   }
@@ -78,8 +78,8 @@ export class PitaraComponent implements OnInit {
     console.log('val', value)
     // this.utils.setTitle(value.name);
     if (!value.provider_id) {
-      if (!value.myPitara)
-      {  this.utils.saasCollectionRead(value.identifier).subscribe((data) => {
+      if (!value.myPitara) {
+        this.utils.saasCollectionRead(value.identifier).subscribe((data) => {
           this.result = data.result.content
           // this.localStorageService.setItem(value.identifier, JSON.stringify(this.result.children[0].children))
           this.pitaraDataMap[value.identifier] = data.result.content.children[0].children;
@@ -146,17 +146,19 @@ export class PitaraComponent implements OnInit {
 
   handlePitaraSelection(event?: any) {
     this.storedTabIndex = this.localStorageService.getTabIndex('pitaraIndex');
-    if(this.utils.getPreviousUrl()==='create-pitara'){
+    if (this.utils.getPreviousUrl() === 'create-pitara') {
       this.utils.setPreviousUrl('pitara')
       this.selectedTab = this.allChips[2];
       this.selectedTabIndex = 2;
-
       this.data = this.mypitara
-    }else{
+      if (this.data !== null && this.data.length > 0)
+        this.data.forEach(pitara => this.unboxPitara(pitara));
+      console.log('map', this.pitaraDataMap)
+    } else {
       if (this.storedTabIndex !== null && !event) {
         this.selectedTabIndex = this.storedTabIndex;
         this.selectedTab = this.allChips[this.selectedTabIndex];
-  
+
       } else if (this.storedTabIndex === null && !event) {
         this.saasArray = this.saaspitara;
         this.selectedTab = this.allChips[0];
@@ -173,9 +175,9 @@ export class PitaraComponent implements OnInit {
         this.saasArray = this.mypitara;
       }
       this.data = this.saasArray
-      if(this.data!==null && this.data.length>0)
-      this.data.forEach(pitara => this.unboxPitara(pitara));
-      console.log('map',this.pitaraDataMap)
+      if (this.data !== null && this.data.length > 0)
+        this.data.forEach(pitara => this.unboxPitara(pitara));
+      console.log('map', this.pitaraDataMap)
     }
   }
 
