@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { UtilService } from '../../services/utils.service';
 import { LocalStorageService } from 'src/app/services/localStorage.service';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
-
+import { of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,34 +21,54 @@ export class HomeComponent implements OnInit {
     this.translate.setDefaultLang('en');
     this.selectedLanguage = this.utils.getLanguage()
 
-    forkJoin([
-      this.utils.searchOnest(),
-      this.utils.searchSaas()
-    ]).subscribe(
-      ([data1, data2]) => {
-        let onestResult = data1.data.collection;
-        let onestCollection = onestResult.map((collection) => {
-          return {
-            appIcon: collection.icon,
-            description: collection.description,
-            name: collection.title,
-            publisher: collection.publisher,
-            identifier: collection.id,
-            provider_id:collection.provider_id
-          }
-        })
+    this.utils.searchSaas().pipe(
+      mergeMap(data1 => {
+        // Process result1 or return an observable for another service call
+        if (data1 !== null) {
+          let data = data1.result.content.filter((content: any) => content.mimeType === 'application/vnd.ekstep.content-collection' && content.keywords.includes('djp_master'))
+          this.localStorageService.setItem('saaspitara', JSON.stringify(data))
+        }
+        return this.utils.searchOnest();
+      }),
+      catchError(error => {
+        // Handle the error here if \searchSaas() fails
+        console.error('An error occurred in searchSaas():', error);
+        // Continue execution by returning an observable with a default value or an empty result
+        return of(null);
+      }),
+      mergeMap(data2 => {
+        // Process data2 or return an observable for further processing
+        if (data2 !== null) {
+          let onestResult = data2.data.collection;
+          let onestCollection = onestResult.map((collection) => {
+            return {
+              appIcon: collection.icon,
+              description: collection.description,
+              name: collection.title,
+              publisher: collection.publisher,
+              identifier: collection.id,
+              provider_id: collection.provider_id
+            }
+          })
+          this.localStorageService.setItem('onestpitara', JSON.stringify(onestCollection))
 
-        let data = data2.result.content.filter((content: any) => content.mimeType === 'application/vnd.ekstep.content-collection' && content.keywords.includes('djp_master'))
-        // let result = [
-        //   ...data
-        // ]
-        this.localStorageService.setItem('saaspitara', JSON.stringify(data))
-        this.localStorageService.setItem('onestpitara', JSON.stringify(onestCollection))
-      },
-      (error) => {
-        console.error('Error in one of the API calls', error);
-      }
-    );
+        }
+
+        // Continue processing or return another observable if needed
+        return of(null);
+      }),
+      catchError(error => {
+        // Handle the error here if searchOnest() fails
+        console.error('An error occurred in searchOnest():', error);
+
+        // Continue execution by returning an observable with a default value or an empty result
+        return of(null);
+      })
+    )
+      .subscribe(finalResult => {
+        // This block will be executed after both service calls and their error handling
+        console.log('Final Result:', finalResult);
+      });
   }
 
   onLanguageChange() {
