@@ -1,10 +1,10 @@
 <ng-container *ngIf="isContentInit">
   <div class="button-container">
 
-  <button mat-raised-button class="btn-new btn-fixx" (click)="scanQr()">
-    Scan QR <mat-icon>qr_code_scanner</mat-icon>
+  <button mat-raised-button class="btn-new btn-header mr-1" (click)="scanQr()">
+    Scan QR<mat-icon>qr_code_scanner</mat-icon>
    </button>
-   <button mat-raised-button class="btn-new btn-fixx" [routerLink]="['/create-pitara']">
+   <button mat-raised-button class="btn-new btn-header" [routerLink]="['/create-pitara']">
      {{ 'createYourPitara' | translate }}
    </button>
   </div>

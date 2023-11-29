@@ -14,6 +14,24 @@ $icon-rocket--Color: #4f5d75;
   perspective-origin: 50% 6.25rem;
 }
 
+.button-container {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  display: flex;
+  z-index: 11;
+}
+
+@media only screen and (max-width: 768px) {
+  .btn-header {
+    padding: 4px 8px !important;
+    line-height: unset;
+    &:first-child {
+      margin-right: 4px;
+    }
+  }
+}
+
 .box-faces {
   position: relative;
   width: 9.375rem;
@@ -232,23 +250,32 @@ p {
 
 ::ng-deep {
   .pitara-tab .mat-tab-header {
-    background: #f8e9d3;
+    // background: #f8e9d3;
     margin: 0 16px;
     border-radius: 8px;
+    border-bottom: none;
   }
 
   .pitara-tab .mat-tab-label {
     font-size: 16px;
-    color: black;
+    color: #fff;
+    opacity: 1;
+    &.mat-tab-label-active {
+    background: #f8e9d3;
+      color: black;
+      border-radius: 24px;
+    }
   }
 
   .pitara-tab.mat-tab-group.mat-primary .mat-ink-bar {
-    background-color: #D4AA70;
+    // background-color: #D4AA70;
+
     height: 6px;
+    display: none;
   }
 
   .pitara-tab .mat-tab-header-pagination-chevron {
-    border-color: black;
+    border-color: #fff;
   }
 
   .mat-toolbar {
@@ -312,27 +339,3 @@ p {
   }
 }
 
-
-
-.button-container {
-  position: absolute;
-  top: 8px;
-  right: 4px;
-  display: flex;
-}
-
-.btn-fix {
-  position: relative;
-  margin-right: 8px; /* Adjust the margin as needed for space between buttons */
-  z-index: 2;
-}
-
-.btn-fix:last-child {
-  margin-right: 0; /* Remove margin from the last button to prevent extra space */
-}
-
-@media only screen and (max-width: 768px) {
-  .btn-fix {
-    padding: 4px 16px !important;
-  }
-}
