@@ -45,6 +45,13 @@ export class ExploreComponent implements OnInit{
         return translation;
       })
     }));
+    this.route.queryParams.subscribe(params => {
+      this.data= [];
+      let qrDataString = params['qrData'];
+      // this.data = JSON.stringify(localStorage.setItem('resultArray',qrDataString));
+      this.data = JSON.parse(qrDataString)
+      console.log('Received QR Data:', this.data);
+    });
   }
 
   

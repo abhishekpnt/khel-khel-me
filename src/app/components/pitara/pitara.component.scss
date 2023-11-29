@@ -204,15 +204,15 @@ p {
 .favorite {
   background-color: #ff4081 !important;
 }
-.btn-fix {
-  position: fixed;
-  right: 8px;
-  top: 8px;
-  z-index: 2;
-  @media only screen and (max-width: 768px) {
-    padding: 4px 16px !important;
-  }
-}
+// .btn-fix {
+//   position: fixed;
+//   right: 4px;
+//   top: 8px;
+//   z-index: 2;
+//   @media only screen and (max-width: 768px) {
+//     padding: 4px 16px !important;
+//   }
+// }
 
 .pitara-type-header {
   padding-left: 2rem;
@@ -312,3 +312,27 @@ p {
   }
 }
 
+
+
+.button-container {
+  position: absolute;
+  top: 8px;
+  right: 4px;
+  display: flex;
+}
+
+.btn-fix {
+  position: relative;
+  margin-right: 8px; /* Adjust the margin as needed for space between buttons */
+  z-index: 2;
+}
+
+.btn-fix:last-child {
+  margin-right: 0; /* Remove margin from the last button to prevent extra space */
+}
+
+@media only screen and (max-width: 768px) {
+  .btn-fix {
+    padding: 4px 16px !important;
+  }
+}
