@@ -232,23 +232,31 @@ p {
 
 ::ng-deep {
   .pitara-tab .mat-tab-header {
-    background: #f8e9d3;
+    // background: #f8e9d3;
     margin: 0 16px;
     border-radius: 8px;
+    border-bottom: none;
   }
 
   .pitara-tab .mat-tab-label {
     font-size: 16px;
-    color: black;
+    color: #fff;
+    opacity: 1;
+    &.mat-tab-label-active {
+    background: #f8e9d3;
+      color: black;
+      border-radius: 24px;
+    }
   }
 
   .pitara-tab.mat-tab-group.mat-primary .mat-ink-bar {
-    background-color: #D4AA70;
+    // background-color: #D4AA70;
     height: 6px;
+    display: none;
   }
 
   .pitara-tab .mat-tab-header-pagination-chevron {
-    border-color: black;
+    border-color: #fff;
   }
 
   .mat-toolbar {
