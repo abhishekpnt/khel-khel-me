@@ -1,5 +1,5 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/localStorage.service';
 import { UtilService } from 'src/app/services/utils.service';
 import { Howl } from 'howler';
@@ -192,6 +192,15 @@ export class PitaraComponent implements OnInit {
     this.isPlayerInit = false;
     this.isContentInit = true;
     this.ngOnInit();
+
+  }
+  
+  scanQr() {
+    const dataToSend = { state: 'pitara-page' };
+    const navigationExtras: NavigationExtras = {
+      queryParams: dataToSend
+    };
+    this.router.navigate(['qr'], navigationExtras);
   }
 }
 

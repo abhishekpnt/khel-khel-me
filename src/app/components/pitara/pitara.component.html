@@ -1,7 +1,13 @@
 <ng-container *ngIf="isContentInit">
-  <button mat-raised-button class="btn-new btn-fix" [routerLink]="['/create-pitara']">
-    {{'createYourPitara'|translate}}
-  </button>
+  <div class="button-container">
+
+  <button mat-raised-button class="btn-new btn-fixx" (click)="scanQr()">
+    Scan QR <mat-icon>qr_code_scanner</mat-icon>
+   </button>
+   <button mat-raised-button class="btn-new btn-fixx" [routerLink]="['/create-pitara']">
+     {{ 'createYourPitara' | translate }}
+   </button>
+  </div>
   <div class="new-pitara-container" *ngIf="recents != null && recents.length>0">
   <ng-container>
     <div class="new-pitara-cards-section">
@@ -43,8 +49,8 @@
               <div>
                 <div class="new-pitara-info">
                   <h4 class="name">{{pitara.name}}</h4>
-                  <p>{{pitara.description}}</p>
-                  <p>{{'craftedBy'|translate}}: {{pitara.publisher?pitara.publisher:'Ekstep Foundation'}}</p>
+                  <!-- <p>{{pitara.description}}</p> -->
+                  <!-- <p>{{'craftedBy'|translate}}: {{pitara.publisher?pitara.publisher:'Ekstep Foundation'}}</p> -->
                 </div>
                 <div class="new-pitara-card-container">
                   <mat-card class="new-pitara-card" *ngFor="let content of pitaraDataMap[pitara.identifier];let i=index">
