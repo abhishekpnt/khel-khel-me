@@ -16,8 +16,8 @@ $icon-rocket--Color: #4f5d75;
 
 .button-container {
   position: absolute;
-  top: 12px;
-  right: 25px;
+  top: 5px;
+  right: 15px;
   display: flex;
   z-index: 11;
   justify-content: center;
@@ -265,7 +265,7 @@ p {
     color: #fff;
     opacity: 1;
     &.mat-tab-label-active {
-    background: #f8e9d3;
+    background: white;
       color: black;
       border-radius: 24px;
     }
@@ -302,8 +302,7 @@ p {
     margin-bottom: 16px;
     .name {
       font-size: 20px;
-      text-decoration: underline;
-      color: #f2d296;
+      color: #f0f0f0;
     }
 
     p {
@@ -330,6 +329,7 @@ p {
 
     .description {
       font-size: 14px;
+      background: oldlace;
     }
 
     ::ng-deep {
