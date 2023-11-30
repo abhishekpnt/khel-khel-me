@@ -51,21 +51,16 @@ export class HomeComponent implements OnInit {
             }
           })
           this.localStorageService.setItem('onestpitara', JSON.stringify(onestCollection))
-
         }
-
         // Continue processing or return another observable if needed
         return of(null);
       }),
       catchError(error => {
         // Handle the error here if searchOnest() fails
         console.error('An error occurred in searchOnest():', error);
-
         // Continue execution by returning an observable with a default value or an empty result
         return of(null);
-      })
-    )
-      .subscribe(finalResult => {
+      })).subscribe(finalResult => {
         // This block will be executed after both service calls and their error handling
         console.log('Final Result:', finalResult);
       });

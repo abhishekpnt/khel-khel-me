@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/utils.service';
 import { Howl } from 'howler';
 import { MatTabGroup } from '@angular/material/tabs';
 import * as Hammer from 'hammerjs';
+import { CsvService } from 'src/app/services/csv.service';
 
 interface Chip {
   key: string;
@@ -38,7 +39,7 @@ export class PitaraComponent implements OnInit {
   ];
   value: any;
   recents = []
-  constructor(public router: Router, public utils: UtilService, private localStorageService: LocalStorageService) { }
+  constructor(public router: Router, public utils: UtilService, private localStorageService: LocalStorageService, private csvService: CsvService) { }
 
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
 
@@ -194,13 +195,44 @@ export class PitaraComponent implements OnInit {
     this.ngOnInit();
 
   }
-  
+
   scanQr() {
     const dataToSend = { state: 'pitara-page' };
     const navigationExtras: NavigationExtras = {
       queryParams: dataToSend
     };
     this.router.navigate(['qr'], navigationExtras);
+  }
+
+  downloadCsv(): void {
+    console.log(this.mypitara)
+    // Download CSV
+    this.csvService.exportToCsv(this.mypitara, 'myPitara.csv');
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const csvData = e.target.result;
+        let parsedData = this.csvService.unflattenObject(csvData);
+        const jsonObject = JSON.parse(JSON.stringify(parsedData).replace(/\\/g, "").replace(/"\[/g, '[').replace(/]"/g, ']'));
+
+        // Remove double quotes from specified keys
+        jsonObject.forEach(item => {
+          item.identifier = +item.identifier;
+          item.myPitara = JSON.parse(item.myPitara);
+        });
+
+        console.log('--', jsonObject)
+        this.localStorageService.setItem('mypitara', JSON.stringify(jsonObject))
+        this.ngOnInit()
+      };
+      reader.readAsText(file);
+    }
   }
 }
 

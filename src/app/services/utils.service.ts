@@ -35,6 +35,16 @@ export class UtilService {
           "status": ["Live"]
         },
         "fields": [
+          "name",
+          "description",
+          "keywords",
+          "mimeType",
+          "primaryCategory",
+          "status",
+          "artifactUrl",
+          "author",
+          "streamingUrl",
+          "identifier"
           
         ]
       }

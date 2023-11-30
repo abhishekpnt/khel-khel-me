@@ -34,6 +34,7 @@ import { CreatePitaraComponent } from './components/create-pitara/create-pitara.
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { CsvService } from './services/csv.service';
 
 // Create a loader for translations
 export function createTranslateLoader(http: HttpClient) {
@@ -82,7 +83,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
   ],
-  providers: [UtilService, LocalStorageService, InstallService],
+  providers: [UtilService, LocalStorageService, InstallService,CsvService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

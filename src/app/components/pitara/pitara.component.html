@@ -1,39 +1,46 @@
 <ng-container *ngIf="isContentInit">
   <div class="button-container">
 
-  <button mat-raised-button class="btn-new btn-header mr-1" (click)="scanQr()">
-    Scan QR<mat-icon>qr_code_scanner</mat-icon>
-   </button>
-   <button mat-raised-button class="btn-new btn-header" [routerLink]="['/create-pitara']">
-     {{ 'createYourPitara' | translate }}
-   </button>
+    <button mat-raised-button class="btn-new btn-header mr-1" (click)="scanQr()">
+      Scan QR<mat-icon>qr_code_scanner</mat-icon>
+    </button>
+    <button mat-raised-button class="btn-new btn-header" [routerLink]="['/create-pitara']">
+      {{ 'createYourPitara' | translate }}<mat-icon>create_new_folder</mat-icon>
+    </button>
+    <button mat-raised-button class="btn-new btn-header" (click)="downloadCsv()">Export Mypitara<mat-icon>
+        import_export</mat-icon></button>
+    <button mat-raised-button class="btn-new btn-header"> <label class="custom-file-upload">
+        <input type="file" style="display: none;" (change)="onFileSelected($event)" />
+        Upload Pitara<mat-icon>import_export</mat-icon>
+      </label>
+    </button>
   </div>
   <div class="new-pitara-container" *ngIf="recents != null && recents.length>0">
-  <ng-container>
-    <div class="new-pitara-cards-section">
-      <div >
-        <div class="new-pitara-info">
-          <h4 class="name">Recently viewed</h4>
+    <ng-container>
+      <div class="new-pitara-cards-section">
+        <div>
+          <div class="new-pitara-info">
+            <h4 class="name">Recently viewed</h4>
+          </div>
+          <div class="new-pitara-card-container">
+            <mat-card class="new-pitara-card" *ngFor="let content of recents;let i=index">
+              <span class="description">{{content.primaryCategory}}</span>
+              <mat-card-title-group (click)="openPlayer(content)">
+                <img mat-card-sm-image src="{{content.appIcon}}" alt="content image">
+                <mat-card-title class="">{{content.name}}</mat-card-title>
+                <mat-card-subtitle class="">
+                  <p class="craftedby">{{'craftedBy'|translate}}:
+                    <b>{{content.author?content.author:'Ekstep
+                      Foundation'}}</b>
+                  </p>
+                </mat-card-subtitle>
+              </mat-card-title-group>
+            </mat-card>
+          </div>
+
         </div>
-        <div class="new-pitara-card-container" >
-          <mat-card class="new-pitara-card" *ngFor="let content of recents;let i=index">
-            <span class="description">{{content.primaryCategory}}</span>
-            <mat-card-title-group (click)="openPlayer(content)">
-              <img mat-card-sm-image src="{{content.appIcon}}" alt="content image">
-              <mat-card-title class="">{{content.name}}</mat-card-title>
-              <mat-card-subtitle class="">
-                <p class="craftedby">{{'craftedBy'|translate}}:
-                  <b>{{content.author?content.author:'Ekstep
-                    Foundation'}}</b>
-                </p>
-              </mat-card-subtitle>
-            </mat-card-title-group>
-          </mat-card>
-        </div>
-  
       </div>
-    </div>
-  </ng-container>
+    </ng-container>
   </div>
   <mat-tab-group #tabGroup mat-align-tabs="center" class="pitara-tab mt-1" [selectedIndex]="selectedTabIndex"
     (selectedTabChange)="handlePitaraSelection($event)">
@@ -44,7 +51,7 @@
       <div class="row">
         <div class="new-pitara-container">
           <ng-container>
-  
+
             <div class="new-pitara-cards-section" *ngFor="let pitara of data;let i=index">
               <div>
                 <div class="new-pitara-info">
@@ -72,98 +79,10 @@
                     </mat-card-actions>
                   </mat-card>
                 </div>
-  
+
               </div>
             </div>
           </ng-container>
-  
-  
-          <!-- <div class="pt-box-card-container">
-                <div class="pitara-box-item" *ngFor="let pitara of data;let i=index" (click)="unboxPitara(pitara)">
-                  <div class=""> -->
-          <!-- <div class="shadow-wrapper">
-                    <div class="shadow">
-                      <div>&nbsp;</div>
-                    </div>
-                  </div>
-                  <div class="box-wrapper">
-                    <div class="box-faces">
-                      <div class="box-face box-face--is-front">
-                        <p>
-                          <img mat-card-sm-image [src]="pitara.appIcon ? pitara.appIcon : '../../../assets/images/wrap.jpg'" alt="pitara image">
-                        </p>
-                      </div>
-                      <div class="box-face box-face--is-back">
-                        <p>
-                          <img mat-card-sm-image [src]="pitara.appIcon ? pitara.appIcon : '../../../assets/images/wrap.jpg'" alt="pitara image">
-                        </p>
-                      </div>
-                      <div class="box-face box-face--is-top">&nbsp;</div>
-                      <div class="box-face box-face--is-bottom">&nbsp;</div>
-                      <div class="box-face box-face--is-left">
-                        <p>
-                          <img mat-card-sm-image [src]="pitara.appIcon ? pitara.appIcon : '../../../assets/images/wrap.jpg'" alt="pitara image">
-                        </p>
-                      </div>
-                      <div class="box-face box-face--is-right">
-                        <p>
-                          <img mat-card-sm-image [src]="pitara.appIcon ? pitara.appIcon : '../../../assets/images/wrap.jpg'" alt="pitara image">
-                        </p>
-                      </div>
-          
-                    </div>
-                  </div> -->
-          <!-- <div class="text-white pitara-box-details"> -->
-          <!-- <div (click)="unboxPitara(pitara)">
-                        <h4>{{pitara.name}}</h4>
-                        <p>{{pitara.description}}</p>
-                        <p>{{'craftedBy'|translate}}: {{pitara.publisher?pitara.publisher:'Ekstep Foundation'}}</p>
-                        <ng-container *ngIf="pitaraDataMap[pitara.identifier]">
-                          <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                              <div class="pt-box-card-container">
-                                <mat-card class="pt-box-card"
-                                  *ngFor="let content of pitaraDataMap[pitara.identifier];let i=index">
-                                  <span class="description">{{content.primaryCategory}}</span>
-                                  <mat-card-title-group>
-                                    <img mat-card-sm-image src="{{content.appIcon}}" alt="content image">
-                                    <mat-card-title class="">{{content.name}}</mat-card-title>
-                                    <mat-card-subtitle class="">
-                                      <p class="craftedby">{{'craftedBy'|translate}}:
-                                        <b>{{content.author?content.author:'Ekstep
-                                          Foundation'}}</b></p>
-                                    </mat-card-subtitle>
-                                  </mat-card-title-group>
-                                  <mat-card-actions class="d-flex justify-content-between">
-                                    <button mat-button><mat-icon aria-hidden="false" aria-label="share icon"
-                                        fontIcon="share"></mat-icon>
-                                      {{'share'|translate}}</button>
-                                  </mat-card-actions>
-                                </mat-card>
-                              </div>
-                            </div>
-                          </div>
-                        </ng-container>
-  
-                      </div> -->
-          <!-- <div class="mt-2">
-                      <button mat-mini-fab class="me-3" title="add to favorite" (click)="handleClick($event ,'favorite')">
-                        <mat-icon aria-hidden="false" aria-label="add to favorite icon" fontIcon="favorite"></mat-icon>
-                      </button>
-                      <button mat-mini-fab color="" (click)="handleClick($event ,'share')">
-                        <mat-icon aria-hidden="false" aria-label="share icon" fontIcon="share"></mat-icon>
-                      </button>
-                    </div> -->
-          <!-- </div>
-                  </div> -->
-          <!-- <div class="hover">
-                  <lottie-player style="width: 18.75rem; height: 18.75rem;"
-                    src="https://lottie.host/42a7a928-4d6a-464f-bd95-a2fe3208be8c/5HHOxaxJIh.json" background="transparent"
-                    speed="2" loop autoplay>
-                  </lottie-player>
-                </div> -->
-          <!-- </div>
-              </div> -->
         </div>
       </div>
     </mat-tab>
