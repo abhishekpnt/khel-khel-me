@@ -35,6 +35,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CsvService } from './services/csv.service';
+import {MatMenuModule} from '@angular/material/menu';
 
 // Create a loader for translations
 export function createTranslateLoader(http: HttpClient) {
@@ -73,6 +74,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatChipsModule,
     MatDialogModule,
     DragDropModule,
+    MatMenuModule,
     ZXingScannerModule ,
     FormsModule, ReactiveFormsModule,
     TranslateModule.forRoot({
