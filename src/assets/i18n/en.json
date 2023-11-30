@@ -22,7 +22,17 @@
   "Pitara Name":"Pitara Name",
   "Create":"Create",
   "dragMessage":"Drag & Drop your content into the Pitara!",
-  "dragRemoveMessage":"Drag & Drop to Remove or Add your content"
-
+  "dragRemoveMessage":"Drag & Drop to Remove or Add your content",
+  "recentlyViewed":"Recently Viewed",
+  "menu":"Menu",
+  "scanQR":"Scan QR",
+  "closeQR":"Close QR",
+  "importMyPitara":"Import Pitara",
+  "exportMyPitara":"Export Mypitara",
+  "select":"Select",
+  "remove":"Remove",
+  "close":"Close",
+  "clearAll":"Clear All",
+  "modify":"Modify"
 
 }

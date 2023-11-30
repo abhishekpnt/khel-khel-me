@@ -22,6 +22,17 @@
   "Pitara Name":"पिटारा नाम",
   "Create":"बनाएं",
   "dragMessage":"अपनी सामग्री को पिटारा में खींचें और छोड़ें",
-  "dragRemoveMessage":"अपनी सामग्री हटाने या जोड़ने के लिए खींचें और छोड़ें"
+  "dragRemoveMessage":"अपनी सामग्री हटाने या जोड़ने के लिए खींचें और छोड़ें",
+  "recentlyViewed":"हाल ही में देखा गया",
+  "menu":"मेन्यू",
+  "scanQR":"QR स्कैन करें",
+  "closeQR":"QR बंद करें",
+  "importMyPitara":"Pitara आयात करें",
+  "exportMyPitara":"Mypitara निर्यात करें",
+  "select":"चुनना",
+  "remove":"हटाना",
+  "close":"बंद करें",
+  "clearAll":"सभी साफ करें",
+  "modify":"संशोधित"
 
 }

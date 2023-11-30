@@ -17,7 +17,7 @@
                         </mat-card-subtitle>
                     </mat-card-title-group>
                     <mat-card-actions class="p-0 m-0 d-block d-sm-block d-md-none" align="end">
-                        <button mat-button color="primary" (click)="moveToTarget(content)">Select</button>
+                        <button mat-button color="primary" (click)="moveToTarget(content)"> {{ 'select' | translate }}</button>
                       </mat-card-actions>
                 </div>
             </mat-card>
@@ -54,10 +54,10 @@
             <div class="text-black pitara-box-details">
                 <div class="d-flex mb-3 justify-content-center align-items-center" *ngIf="targetItems.length !== 0">
                     <div class="counter me-1">{{targetItems.length}}</div>
-                    <button mat-button (click)="showModal=!showModal">Modify</button>
+                    <button mat-button (click)="showModal=!showModal">{{'modify'|translate}}</button>
                 </div>
                 <div class="d-flex mb-3 justify-content-center align-items-center">
-                    <button mat-raised-button color="primary" (click)="scanQr()">Scan QR<mat-icon>qr_code_scanner</mat-icon></button>
+                    <button mat-raised-button color="primary" (click)="scanQr()">{{'scanQR'|translate}}<mat-icon>qr_code_scanner</mat-icon></button>
                 </div>
                 <form class="example-form">
                     <mat-form-field appearance="fill" color="primary" class="w-100">
@@ -71,10 +71,10 @@
         <div *ngIf="showModal"  class="position-sticky dragdropbox content-list">
             <div class="d-flex">
                 <div class="box-description text-start mr-auto">{{'dragRemoveMessage'|translate}}</div>
-                <button mat-button color="warn" (click)="showModal=!showModal" class="close-button"><mat-icon>close</mat-icon> Close</button>
+                <button mat-button color="warn" (click)="showModal=!showModal" class="close-button"><mat-icon>close</mat-icon> {{'close'|translate}}</button>
             </div>
             <br>
-            <button mat-button color="warn" (click)="clearAll()">Clear All</button>
+            <button mat-button color="warn" (click)="clearAll()">{{'clearAll'|translate}}</button>
             <ng-container>
                 <div class="d-flex flex-column removeDragDropCt">
                 <mat-card class="pt-box-card mb-2" *ngFor="let content of targetItems;let i=index" cdkDrag>
@@ -91,7 +91,7 @@
                             </mat-card-subtitle>
                         </mat-card-title-group>
                         <mat-card-actions class="p-0 m-0 d-block d-sm-block d-md-none" align="end">
-                            <button mat-button color="warn"(click)="moveToTarget(content)">Remove</button>
+                            <button mat-button color="warn"(click)="moveToTarget(content)"> {{ 'remove' | translate }}</button>
                           </mat-card-actions>
                     </div>
                 </mat-card>
@@ -102,7 +102,7 @@
             <zxing-scanner #scanner (scanSuccess)="scanSuccessHandler($event)">
             </zxing-scanner>
             <div class="d-flex mb-3 justify-content-center align-items-center">
-                <button mat-raised-button color="warn" (click)="scanQr()">Close QR</button>
+                <button mat-raised-button color="warn" (click)="scanQr()">{{ 'closeQR' | translate }}</button>
             </div>
         </div>
     </div>

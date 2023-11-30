@@ -1,10 +1,11 @@
 <ng-container *ngIf="isContentInit">
   <button ngClass="button-container" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-    <mat-icon>menu</mat-icon>Menu
+    <mat-icon>menu</mat-icon>{{ 'menu' | translate }}
+
   </button>
   <mat-menu #menu="matMenu" xPosition="before">
     <button mat-menu-item class="" (click)="scanQr()">
-      Scan QR
+      {{ 'scanQR' | translate }}
       <mat-icon>qr_code_scanner</mat-icon>
     </button>
     <button mat-menu-item class="" [routerLink]="['/create-pitara']">
@@ -12,13 +13,13 @@
       <mat-icon>create_new_folder</mat-icon>
     </button>
     <button mat-menu-item class="" (click)="downloadCsv()">
-      Export Mypitara
+      {{ 'exportMyPitara' | translate }}
       <mat-icon>import_export</mat-icon>
-    </button>
+    </button> 
     <button mat-menu-item class="">
       <label class="custom-file-upload">
         <input type="file" style="display: none;" (change)="onFileSelected($event)" />
-        Import Pitara
+        {{ 'importMyPitara' | translate }}
         <mat-icon>import_export</mat-icon>
       </label>
     </button>
@@ -29,7 +30,7 @@
       <div class="new-pitara-cards-section">
         <div>
           <div class="new-pitara-info">
-            <h4 class="name">Recently viewed</h4>
+            <h4 class="name"> {{ 'recentlyViewed' | translate }}</h4>
           </div>
           <div class="new-pitara-card-container">
             <mat-card class="new-pitara-card" *ngFor="let content of recents;let i=index">
